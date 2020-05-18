@@ -5,7 +5,7 @@ const spider = require('./spider.js');
 console.log(await spider());
 ```
 ## Expected output:
-```json
+```javascript
 {
   'Red Dead Online': [
     { service: 'PC', status: 'up' },
