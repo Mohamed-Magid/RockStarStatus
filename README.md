@@ -4,7 +4,7 @@ Just require ```spider.js``` file in your script and call it as async function
 const spider = require('./spider.js');
 console.log(await spider());
 ```
-## Expected output:
+## Expected Output for success:
 ```javascript
 {
   'Red Dead Online': [
@@ -27,5 +27,13 @@ console.log(await spider());
     { service: 'Cloud Services', status: 'up' },
     { service: 'Downloads', status: 'up' }
   ]
+}
+```
+## Expected Output for failure:
+```javascript
+{
+    error: {
+        msg: 'Something went wrong'
+    }
 }
 ```

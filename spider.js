@@ -3,7 +3,8 @@ const parser = require('./helpers/parser');
 
 const spider = async (req, res) => {
     // Initialize browser
-    const browser = await puppetter.launch({
+    try {
+      const browser = await puppetter.launch({
         headless: true, // set false to see chrome page
         args: ["--no-sandbox", "--disable-setuid-sandbox"]
       });
@@ -20,6 +21,19 @@ const spider = async (req, res) => {
       await page.goto('https://support.rockstargames.com/servicestatus');
       await page.waitForSelector('.service');
       const fullInfo = await page.$$eval('.platform', elements => elements.map(element => element.getAttribute('aria-label')));
+      await browser.close();
+
+      if (fullInfo.length < 1)
+        throw new Error();
+
       return parser(fullInfo);
+    }
+    catch (e) {
+      return {
+        error: {
+          msg: 'Something went wrong'
+        }
+      }
+    }
 }
 module.exports = spider;
